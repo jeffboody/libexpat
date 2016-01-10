@@ -1,4 +1,3 @@
-Makefile
 .libs
 *.la
 configure
