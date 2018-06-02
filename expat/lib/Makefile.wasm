@@ -1,0 +1,18 @@
+TARGET   = libexpat.bc
+CLASSES  = xmlrole xmltok xmltok_impl
+SOURCE   = $(CLASSES:%=%.c) xmlparse.c xmltok_ns.c
+OBJECTS  = $(SOURCE:.c=.bc)
+HFILES   = $(CLASSES:%=%.h)
+FLAGS    = -O2 -Wall -DHAVE_MEMMOVE
+EMCC     = emcc
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(EMCC) $(OBJECTS) $(FLAGS) -o $(TARGET)
+
+clean:
+	rm -f $(OBJECTS) *~ \#*\# $(TARGET)
+
+%.bc: %.c $(HFILES)
+	$(EMCC) $(FLAGS) $< -o $@
